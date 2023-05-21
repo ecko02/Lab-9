@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="style.css">
+<body>
+  <div class="container">
+    <h2>Currency Converter</h2>
+    <div class="input-group">
+      <label>Amount:</label>
+      <input type="text" id="amountInput" placeholder="0"/>
+    </div>
+    <div class="input-group">
+      <label>From:</label>
+      <select id="fromCurrency">
+        <option value="USD">USD (United States Dollar)</option>
+        <option value="EUR">EUR (Euro Eur)</option>
+        <option value="GBP">GBP (British Pound)</option>
+        <option value="KRW">KRW (South Korean Won)</option>
+        <option value="JPY">JPY (Japanese Yen)</option>
+        <option value="CNY">CNY (Chinese Yuan)</option>      
+      </select>
+    </div>
+    <div class="input-group">
+      <label>To:</label>
+      <select id="toCurrency">
+        <option value="USD">USD (United States Dollar)</option>
+        <option value="EUR">EUR (Euro Eur)</option>
+        <option value="GBP">GBP (British Pound)</option>
+        <option value="KRW">KRW (South Korean Won)</option>
+        <option value="JPY">JPY (Japanese Yen)</option>
+        <option value="CNY">CNY (Chinese Yuan)</option>   
+      </select>
+    </div>
+    <button class="btn" onclick="convert()">Convert</button>
+    <div class="result" id="result"></div>
+    <div class="number-pad">
+      <button onclick="appendNumber('7')">7</button>
+      <button onclick="appendNumber('8')">8</button>
+      <button onclick="appendNumber('9')">9</button>
+      <button onclick="appendNumber('4')">4</button>
+      <button onclick="appendNumber('5')">5</button>
+      <button onclick="appendNumber('6')">6</button>
+      <button onclick="appendNumber('1')">1</button>
+      <button onclick="appendNumber('2')">2</button>
+      <button onclick="appendNumber('3')">3</button>
+      <button onclick="appendNumber('0')">0</button>
+      <button onclick="appendDecimal()">.</button>
+    </div>
+  </div>
+
+  <script>
+    
+    const exchangeRates  = {
+      USD: {
+        EUR: 0.905441,
+        CNY: 6.911184,
+        KRW: 1320.0328,
+        JPY: 134.74591,
+        GBP: 0.79035827,
+        USD: 1
+      },
+      
+      CNY: {
+        USD: 0.14469301,
+        KRW: 190.99952,
+        JPY: 19.49679,
+        GBP: 0.11435931,
+        EUR: 0.13101098,
+        CNY: 1
+      },
+      
+      KRW: {
+        EUR: 0.0006859231,
+        USD: 0.00075755693,
+        CNY: 0.0052356153,
+        JPY: 0.10207769,
+        GBP: 0.00059874138,
+        KRW: 1
+      },
+      
+      JPY: {
+        EUR: 0.0067196179,
+        USD: 0.0074213758,
+        CNY: 0.051290493,
+        KRW: 9.7964595,
+        GBP: 0.0058655457,
+        JPY: 1
+      },
+      
+      GBP: {
+        USD: 1.265249,
+        CNY: 8.7443686,
+        KRW: 1670.1702,
+        JPY: 170.48712,
+        EUR: 1.1456083,
+        GBP: 1
+      },
+
+      EUR: {
+        USD: 1.1044342,
+        CNY: 7.6329479,
+        KRW: 1457.8894,
+        JPY: 148.81799,
+        GBP: 0.87289869,
+        EUR: 1
+      }
+
+
+    
+    };
+
+    function appendNumber(number) {
+      const amountInput = document.getElementById('amountInput');
+      amountInput.value += number;
+    }
+
+    function appendDecimal() {
+      const amountInput = document.getElementById('amountInput');
+      if (!amountInput.value.includes('.')) {
+        amountInput.value += '.';
+      }
+    }
+    
+    function convert() {
+      const amountInput = document.getElementById('amountInput');
+      const fromCurrency = document.getElementById('fromCurrency').value;
+      const toCurrency = document.getElementById('toCurrency').value;
+
+      const conversionRate = exchangeRates[fromCurrency][toCurrency];
+      const convertedAmount = parseFloat(amountInput.value) * conversionRate;
+
+      const resultElement = document.getElementById('result');
+      resultElement.innerHTML = `${amountInput.value} ${fromCurrency} = ${convertedAmount.toFixed(2 )} 0 ${toCurrency}`;
+    }
+
+   
+  </script>
+</body>
+</html>
